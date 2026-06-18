@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-gray-900">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/output.css') }}">
+</head>
+
+<body class="h-full m-auto">
+
+<div class="sm:mx-auto sm:w-full sm:max-w-sm space-y-10 mx-auto mt-10">
+
+    <h2 class="text-center text-2xl font-bold tracking-tight text-white">
+        Create an account
+    </h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="mb-6 space-y-2">
+                    {% for category, message in messages %}
+                        <div class="rounded-md bg-red-500/10 px-3 py-2 text-sm text-red-400">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <br>
+
+        <form method="POST" class="space-y-6" novalidate>
+
+            {{ form.hidden_tag() }}
+
+            <div>
+                {{ form.username.label(class="block text-sm font-medium text-gray-100") }}
+
+                <div class="mt-2">
+                    {{ form.username(
+                        class="block w-full border-white rounded-md bg-white/5 px-3 py-1.5 text-white outline-1 outline-white/10 focus:outline-2 focus:outline-indigo-500"
+                        + (" outline-red-500" if form.username.errors else ""),
+                        autocomplete="username",
+                        **{"aria-describedby": "username-error"} if form.username.errors else {}
+                    ) }}
+                </div>
+                {% for error in form.username.errors %}
+                    <p id="username-error" class="mt-1 text-sm text-red-400">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div>
+                {{ form.email.label(class="block text-sm font-medium text-gray-100") }}
+
+                <div class="mt-2">
+                    {{ form.email(
+                        class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-white outline-1 outline-white/10 focus:outline-2 focus:outline-indigo-500"
+                        + (" outline-red-500" if form.email.errors else ""),
+                        autocomplete="email",
+                        **{"aria-describedby": "email-error"} if form.email.errors else {}
+                    ) }}
+                </div>
+                {% for error in form.email.errors %}
+                    <p id="email-error" class="mt-1 text-sm text-red-400">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div>
+                {{ form.password.label(class="block text-sm font-medium text-gray-100") }}
+
+                <div class="mt-2">
+                    {{ form.password(
+                        class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-white outline-1 outline-white/10 focus:outline-2 focus:outline-indigo-500"
+                        + (" outline-red-500" if form.password.errors else ""),
+                        autocomplete="new-password",
+                        **{"aria-describedby": "password-error"} if form.password.errors else {}
+                    ) }}
+                </div>
+                {% for error in form.password.errors %}
+                    <p id="password-error" class="mt-1 text-sm text-red-400">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div>
+                {{ form.submit(
+                    class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-400"
+                ) }}
+            </div>
+
+        </form>
+
+        <p class="mt-10 text-center text-sm text-gray-400">
+            Already have an account?
+            <a href="#" class="font-semibold text-indigo-400 hover:text-indigo-300">Sign in</a>
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>
