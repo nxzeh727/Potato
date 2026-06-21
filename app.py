@@ -79,7 +79,7 @@ def signup():
 
 @app.route("/login",methods=["GET","POST"])
 def login():
-    pass
+    return render_template("login.html")
 
 @app.route("/home", methods=["GET","POST"])
 def home():
@@ -89,4 +89,4 @@ with app.app_context():
     db.create_all()
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host = "0.0.0.0")
