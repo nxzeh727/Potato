@@ -88,7 +88,7 @@ def login():
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
-        potaot = Users.query(username=username).first()
+        potaot = Users.query.filter_by(username=username).first()
         if potaot and potaot.check_password(password):
             session['username'] = potaot.username
             return redirect(url_for("home"))
