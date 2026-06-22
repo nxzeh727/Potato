@@ -1,1 +1,62 @@
-potaot :D
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-gray-900">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/output.css') }}">
+</head>
+
+<body class="h-full m-auto">
+
+    <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+        <img src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company" class="mx-auto h-10 w-auto" />
+        <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">Sign in to your account</h2>
+    </div>
+
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form action="#" method="POST" class="space-y-6">
+        <div>
+             {{ form.username.label(class="block text-sm font-medium text-gray-100") }}
+            <div class="mt-2">
+                {{ form.username(
+                        class="block w-full border-white rounded-md bg-white/5 px-3 py-1.5 text-white outline-1 outline-white/10 focus:outline-2 focus:outline-indigo-500"
+                        + (" outline-red-500" if form.username.errors else ""),
+                        autocomplete="username",
+                        **{"aria-describedby": "username-error"} if form.username.errors else {}
+                    ) }}
+        </div>
+
+        <div>
+            {{ form.password.label(class="block text-sm font-medium text-gray-100") }}
+
+            <div class="mt-2">
+                {{ form.password(
+                    class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-white outline-1 outline-white/10 focus:outline-2 focus:outline-indigo-500"
+                    + (" outline-red-500" if form.password.errors else ""),
+                    autocomplete="new-password",
+                    **{"aria-describedby": "password-error"} if form.password.errors else {}
+                ) }}
+            </div>
+            {% for error in form.password.errors %}
+                <p id="password-error" class="mt-1 text-sm text-red-400">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        <div>
+            {{ form.submit(
+                    class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-400"
+                ) }}
+        </form>
+
+        <p class="mt-10 text-center text-sm/6 text-gray-400">
+        Not a member?
+        <a href="#" class="font-semibold text-indigo-400 hover:text-indigo-300">Start a 14 day free trial</a>
+        </p>
+    </div>
+    </div>
+</body>
+</html>

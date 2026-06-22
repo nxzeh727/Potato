@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import DeclarativeBase,Mapped, mapped_column
@@ -59,6 +59,11 @@ class SignUp(FlaskForm):
     password = PasswordField("password", validators=[DataRequired(), Length(10,40)])
     submit = SubmitField("submit")
 
+class Login(FlaskForm):
+    username = StringField("Username", validators=[DataRequired(), Length(8,40)])
+    password = PasswordField("password", validators=[DataRequired(), Length(10,40)])
+    submit = SubmitField("submit")
+
 @app.route("/")
 def index():
     return(render_template("index.html"))
@@ -79,7 +84,17 @@ def signup():
 
 @app.route("/login",methods=["GET","POST"])
 def login():
-    return render_template("login.html")
+    form = Login()
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        potaot = Users.query(username=username).first()
+        if potaot and potaot.check_password(password):
+            session['username'] = potaot.username
+            return redirect(url_for("home"))
+        else:
+            return render_template("login.html", form=form)
+    return render_template("login.html", form=form)
 
 @app.route("/home", methods=["GET","POST"])
 def home():
